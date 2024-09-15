@@ -1,0 +1,64 @@
+.banner-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+	flex-direction: column;
+	.banner-tag {
+		color: rgb(249, 73, 73);
+		background: #f4efef;
+		padding: 10px;
+		border-radius: 20px;
+	}
+	.banner-title {
+		font-size: 30px;
+		font-weight: 800;
+		font-size: 40px;
+	}
+	.banner-title p {
+		margin: 0;
+	}
+	.banner-des {
+		width: 55%;
+		font-size: 17px;
+		font-family: "Kanit", sans-serif;
+		font-weight: 400;
+		font-style: normal;
+		opacity: 0.6;
+	}
+	.banner-title span {
+		color: purple;
+		font-style: italic;
+	}
+	.banner-search {
+		width: 45%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: 2px 2px 2px 0px #dcdcdc;
+		border-radius: 20px;
+		border: 1px solid #b9b7b7;
+		overflow: hidden;
+		height: 40px;
+		input {
+			width: 90%;
+			height: 100%;
+			font-size: 15px;
+			font-family: "Kanit", sans-serif;
+			font-weight: 400;
+			font-style: normal;
+			padding: 0 0 0 10px;
+			outline: none;
+			border: none;
+			opacity: 0.9;
+		}
+		span {
+			background-color: purple;
+			color: white;
+			width: 10%;
+			height: 100%;
+			text-align: center;
+			align-content: center;
+		}
+	}
+}

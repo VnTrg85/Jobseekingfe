@@ -1,13 +1,61 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.layout {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.primary-btn {
+	color: white;
+	background-color: blueviolet;
+	outline: none;
+	border: none;
+	cursor: pointer;
+}
+
+.primary-btn:hover {
+	color: black;
+	background-color: white;
+	border: 1px solid #ccc;
+}
+
+.normal-btn {
+	color: black;
+	background-color: white;
+	outline: none;
+	border: none;
+	cursor: pointer;
+}
+
+.normal-btn:hover {
+	color: white;
+	background-color: blueviolet;
+}
+
+.c-r {
+	color: rgb(121, 30, 30);
+}
+.c-b {
+	color: rgb(58, 58, 138);
+}
+.c-p {
+	color: rgb(114, 59, 114);
+}
+.active-item {
+	color: rgb(156, 37, 37);
+	border-bottom: 3px solid rgb(156, 37, 37) !important;
+	font-weight: 600;
 }

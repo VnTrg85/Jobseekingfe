@@ -1,0 +1,163 @@
+.container {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	background: rgb(245 245 245);
+	.jobs-container {
+		margin-top: 30px;
+		width: 80%;
+		display: flex;
+		justify-content: center;
+		gap: 10px;
+		.jobs-container-left {
+			width: 70%;
+			display: flex;
+			gap: 20px;
+			flex-direction: column;
+			.jobs-header {
+				background: white;
+				display: flex;
+				align-items: center;
+				padding: 0 20px 20px;
+				gap: 20px;
+				.company-img {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: 80px;
+					height: 80px;
+					border: 1px solid #eae9e9;
+					border-radius: 10px;
+					img {
+						width: 100%;
+					}
+				}
+				.job-header-text {
+					display: flex;
+					flex-direction: column;
+					align-items: start;
+					gap: 10px;
+					h3 {
+						margin: 20px 0 0;
+					}
+					h4 {
+						margin: 5px 0 10px;
+					}
+					.company-location,
+					.job-salary {
+						display: flex;
+						gap: 10px;
+						align-items: center;
+						opacity: 0.5;
+						font-size: 15px;
+						font-weight: 600;
+					}
+				}
+			}
+			.jobs-container-left-middle {
+				background: white;
+				.jobs-container-left-title {
+					display: flex;
+					justify-content: space-around;
+					.jobs-container-item {
+						width: 50%;
+						padding: 20px 0;
+						cursor: pointer;
+						border-bottom: 1px solid #ccc;
+					}
+				}
+				.job-role-res {
+					padding: 10px;
+					text-align: start;
+					font-size: 16px;
+				}
+			}
+			.jobs-container-left-bottom {
+				background: white;
+				padding: 10px 10px 20px;
+				gap: 20px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				.company-title {
+					width: 100%;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					.company-jobs-opening {
+						padding: 10px;
+						border-radius: 10px;
+						border: 1px solid #ccc;
+						font-weight: 600;
+					}
+				}
+				.company-info {
+					width: 100%;
+					display: flex;
+					justify-content: space-between;
+					.company-info-item {
+						display: flex;
+						justify-content: left;
+						text-align: start;
+						gap: 10px;
+						div {
+							font-weight: 800;
+							p {
+								font-weight: 500;
+								font-size: 15px;
+								margin: 10px 0;
+							}
+						}
+					}
+				}
+				.company-desc {
+					text-align: start;
+				}
+				.view-btn {
+					padding: 10px;
+					font-weight: 600;
+					border-radius: 10px;
+				}
+			}
+		}
+		.jobs-container-right {
+			width: 30%;
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			.apply-btn,
+			.save-btn {
+				width: 100%;
+				height: 50px;
+				font-size: 15px;
+				font-weight: 600;
+				border-radius: 5px;
+			}
+			.save-btn {
+				border: 1px solid #ccc;
+			}
+			.general-info {
+				background: white;
+				text-align: start;
+				padding: 0 10px 20px;
+			}
+		}
+	}
+	.recommend-jobs {
+		width: 80%;
+		h3 {
+			text-align: start;
+			align-content: center;
+			background: white;
+			height: 50px;
+		}
+		.jobs-container {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+			gap: 50px;
+		}
+	}
+}

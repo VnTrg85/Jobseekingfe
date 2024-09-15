@@ -1,0 +1,112 @@
+.job-item {
+	width: 30%;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.3);
+	padding: 10px 20px 20px;
+	border: 1px solid #eae9e9;
+	border-radius: 10px;
+	.job-item-top {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		.job-item-time {
+			font-size: 15px;
+			opacity: 0.5;
+		}
+		.job-item-saveforlater {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 40px;
+			height: 40px;
+			border-radius: 50px;
+			background: #eae9e9;
+			font-size: 18px;
+			cursor: pointer;
+		}
+		.job-item-saveforlater:hover {
+			background-color: #c9c8c8;
+		}
+	}
+	.job-item-middle {
+		display: flex;
+		flex-direction: column;
+		.company-container {
+			display: flex;
+			justify-content: left;
+			gap: 10px;
+			.company-img {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 50px;
+				width: 20%;
+				border: 1px solid #eae9e9;
+				border-radius: 10px;
+				img {
+					width: 100%;
+				}
+			}
+			.company-text {
+				h4 {
+					margin: 0;
+					font-size: 15px;
+				}
+				p {
+					margin: 5px;
+					font-size: 15px;
+				}
+			}
+		}
+		.job-info {
+			display: flex;
+			flex-direction: column;
+			align-items: start;
+			gap: 10px;
+			.job-name {
+				margin: 10px 0 0;
+			}
+			.job-desc {
+				margin: 0;
+				text-align: left;
+				font-size: 16px;
+				font-family: "Kanit";
+				font-style: normal;
+				font-weight: 300;
+			}
+			.job-requirement {
+				display: flex;
+				justify-content: center;
+				flex-wrap: wrap;
+				gap: 10px;
+				.job-requirement-item {
+					padding: 0 10px;
+					height: 30px;
+					font-size: 15px;
+					align-content: center;
+					border: 1px solid #eae9e9;
+					border-radius: 10px;
+					font-weight: 600;
+					cursor: default;
+				}
+			}
+		}
+	}
+	.job-item-bottom {
+		display: flex;
+		justify-content: left;
+		gap: 10px;
+		margin-top: 20px;
+		button {
+			padding: 0 10px;
+			height: 40px;
+			border: 1px solid #eae9e9;
+			border-radius: 10px;
+			font-size: 14px;
+			font-weight: 600;
+			cursor: pointer;
+		}
+	}
+}

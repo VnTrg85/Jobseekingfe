@@ -1,0 +1,79 @@
+.profile {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	.user-infor {
+		width: 70%;
+		border: 1px solid #ccc;
+		border-radius: 10px;
+		padding: 40px 30px;
+		text-align: start;
+		.user-infor-header {
+			display: flex;
+			justify-content: space-between;
+			.user-name-des-img {
+				display: flex;
+				img {
+					width: 100px;
+					height: 50px;
+				}
+				.user-name-des {
+					text-align: start;
+					h3 {
+						margin-top: 0px;
+					}
+					p {
+						width: 95%;
+						font-size: 15px;
+					}
+				}
+			}
+			.btn-edit {
+				width: 80px;
+				height: 50px;
+				border: 1px solid #ccc;
+				border-radius: 10px;
+				align-content: center;
+				text-align: center;
+				cursor: pointer;
+			}
+			.btn-edit:hover {
+				color: red;
+			}
+		}
+		.user-email {
+			margin-top: 10px;
+			span {
+				margin-left: 10px;
+			}
+		}
+		.user-phone {
+			margin-top: 10px;
+
+			span {
+				margin-left: 10px;
+			}
+		}
+		.user-skills {
+			.skill-item {
+				margin: 0 5px;
+				padding: 5px;
+				background: black;
+				color: white;
+				font-size: 15px;
+				border-radius: 10px;
+			}
+		}
+	}
+	.applied-jobs-container {
+		width: 70%;
+
+		h3 {
+			text-align: start;
+		}
+		.applied-jobs-header:first-child {
+			width: 20%;
+			background: red;
+		}
+	}
+}

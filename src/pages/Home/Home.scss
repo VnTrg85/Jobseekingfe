@@ -1,0 +1,27 @@
+.home {
+	width: 80%;
+}
+
+.home-section-jobs {
+	margin-top: 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	gap: 20px;
+	margin-bottom: 500px;
+	span {
+		color: blue;
+		margin-left: 10px;
+	}
+	.section-label {
+		padding: 10px 0;
+		font-size: 30px;
+		font-weight: 800;
+	}
+	.jobs-container {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 50px;
+		justify-content: center;
+	}
+}
