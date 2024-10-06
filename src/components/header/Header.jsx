@@ -1,36 +1,139 @@
 import { useNavigate } from "react-router-dom";
 import "./Header.scss";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import axios from "axios";
 function Header() {
 	const navigate = useNavigate();
+	const [employee, setEmployee] = useState(null);
+	const [company, setCompany] = useState(null);
+
 	const { user } = useContext(AuthContext);
+
+	useEffect(() => {
+		const getData = async () => {
+			if (user) {
+				if (user.userRole.id == "4") {
+					await axios.get(`http://localhost:8080/employee/getByUserId/${user?.id}`).then(res => {
+						setEmployee(res.data);
+					});
+				} else if (user.userRole.id == "5") {
+					await axios.get(`http://localhost:8080/company/getByUserID/${user?.id}`).then(res => {
+						setCompany(res.data);
+					});
+				}
+			}
+		};
+		getData();
+	}, [user]);
+	console.log(user);
+
 	return (
 		<div className="header">
 			<div
 				className="header-left"
 				onClick={() => {
-					navigate("/");
+					if (user?.userRole.id == "5") {
+						navigate("/jobrescruiting");
+					} else if (user?.userRole.id == "3") {
+						navigate("/admin/companies");
+					} else {
+						navigate("/");
+					}
 				}}
 			>
 				JobSeeking
 			</div>
 			<div className="header-right">
-				<div className="header-items">
-					{
-							<div className="header-items">
-							<div className="header-item" onClick={() => {navigate("/admin/companies");}}>Companies</div>
-							<div className="header-item" onClick={() => {navigate("/admin/jobtype");}}>Jobtype</div>
-							<div className="header-item" onClick={() => {navigate("/admin/role");}}>Roles</div>
-							<div className="header-item" onClick={() => {navigate("/admin/user");}}>User</div>
-
-							</div>
-						
-					}
-				</div>
+				{user?.userRole.id == "3" && (
+					<div className="header-items">
+						<div
+							className="header-item"
+							onClick={() => {
+								navigate("/admin/companies");
+							}}
+						>
+							Companies
+						</div>
+						<div
+							className="header-item"
+							onClick={() => {
+								navigate("/admin/jobtype");
+							}}
+						>
+							Jobtype
+						</div>
+						<div
+							className="header-item"
+							onClick={() => {
+								navigate("/admin/role");
+							}}
+						>
+							Roles
+						</div>
+						<div
+							className="header-item"
+							onClick={() => {
+								navigate("/admin/user");
+							}}
+						>
+							User
+						</div>
+					</div>
+				)}
+				{user?.userRole.id == "4" && (
+					<div className="header-items">
+						<div
+							className="header-item"
+							onClick={() => {
+								navigate("/");
+							}}
+						>
+							Home
+						</div>
+						<div
+							className="header-item"
+							onClick={() => {
+								navigate("/jobslist");
+							}}
+						>
+							Jobs
+						</div>
+						<div
+							onClick={() => {
+								navigate("/Browse");
+							}}
+							className="header-item "
+						>
+							Browse
+						</div>
+					</div>
+				)}
+				{user?.userRole.id == "5" && (
+					<div className="header-items">
+						<div
+							className="header-item"
+							onClick={() => {
+								navigate("/jobrescruiting");
+							}}
+						>
+							Jobs recruiting
+						</div>
+					</div>
+				)}
 				{user != null ? (
-					<div className="header-user">
-						<img src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="></img>
+					<div
+						className="header-user"
+						onClick={() => {
+							if (user?.userRole.id == "5") {
+								navigate("/companyProfile");
+							} else {
+								navigate("/profile");
+							}
+						}}
+					>
+						{user?.userRole.id == "4" && <img src={employee?.image || "https://img.icons8.com/nolan/600w/000000/user-default.png"}></img>}
+						{user?.userRole.id == "5" && <img src={company?.logo || "https://img.icons8.com/nolan/600w/000000/user-default.png"}></img>}
 					</div>
 				) : (
 					<div>

@@ -1,0 +1,72 @@
+.job-recruiting-container {
+	border: 1px solid #ccc;
+	padding: 10px 20px;
+	border-radius: 20px;
+	margin-top: 20px;
+	width: 80%;
+	background: rgba(255, 255, 255, 0.8);
+	.recrui-header {
+		display: flex;
+		justify-content: space-between;
+		h3 {
+			text-decoration: underline;
+			font-size: 25px;
+			color: red;
+			margin: 0;
+		}
+
+		.add-jobs-btn {
+			border: 1px solid #ccc;
+			border-radius: 20px;
+			padding: 10px 20px;
+			background: rgb(18, 99, 105);
+			color: white;
+			font-weight: 600;
+			cursor: pointer;
+		}
+		.add-jobs-btn:hover {
+			background: blue;
+		}
+	}
+	.css-header {
+		border-bottom: 1px solid #ccc;
+		margin-top: 20px;
+	}
+	.job-header {
+		display: flex;
+		align-items: center;
+		text-align: left;
+		.time,
+		.location,
+		.salary,
+		.status {
+			flex: 1;
+		}
+		.detail {
+			margin-right: 50px;
+			padding: 10px;
+			cursor: pointer;
+			border-radius: 10px;
+		}
+		.detail:hover {
+			background: #ccc;
+		}
+		.title {
+			flex: 2;
+		}
+		.btn-change:hover {
+			background: rgb(126, 64, 64);
+		}
+		.btn-change {
+			width: 120px;
+			background: black;
+			color: white;
+			font-size: 10px;
+			height: 30px;
+			font-weight: 600;
+			cursor: pointer;
+			border: none;
+			border-radius: 10px;
+		}
+	}
+}

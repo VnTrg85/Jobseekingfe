@@ -113,6 +113,19 @@
 				}
 				.company-desc {
 					text-align: start;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					display: -webkit-box;
+					-webkit-line-clamp: 2; /* number of lines to show */
+					line-clamp: 2;
+					-webkit-box-orient: vertical;
+					a {
+						text-decoration: underline;
+						margin-left: 5px;
+					}
+				}
+				.company-img {
+					width: 100%;
 				}
 				.view-btn {
 					padding: 10px;

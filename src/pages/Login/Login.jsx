@@ -1,129 +1,237 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Login.scss";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import cookie from "js-cookie";
+import { AuthContext } from "../../context/AuthContext";
 function Login() {
-		const state = useLocation().pathname.split("/")[2];
-		const [login, setLogin] = useState(state);
-		const [formData, setFormData] = useState({
-			name: '',
-			email: '',
-			password: '',
-			phone: '',
-			role: ''
-		});
-		const [errorMessage, setErrorMessage] = useState('');
-		const [emailError, setEmailError] = useState('');
+	const state = useLocation().pathname.split("/")[2];
+	const { dispatch } = useContext(AuthContext);
+	const [login, setLogin] = useState(state);
+	const [err, setErr] = useState(false);
+	const [dataLogin, setDataLogin] = useState({
+		email: "",
+		password: "",
+	});
+	const navigate = useNavigate();
+	var initialValue = {
+		name: "",
+		email: "",
+		password: "",
+		phone: "",
+		userRole: { id: "" },
+	};
+	const [signupData, setSignupData] = useState(initialValue);
 
-		useEffect(() => {
-			setLogin(state);
-		}, [state]);
+	const handleChange = e => {
+		setDataLogin(prev => ({ ...prev, [e.target.name]: e.target.value }));
+	};
+	const handleChangeSignUp = e => {
+		if (e.target.name == "userRole") {
+			setSignupData(prev => ({ ...prev, [e.target.name]: { id: e.target.value } }));
+		} else setSignupData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+	};
 
-		const changeForm = (e) => {
-			const { name, value } = e.target;
-			setFormData(prev => ({ ...prev, [name]: value }));
-		
-			if (name === 'email') {
-				const error = validateEmail(value);
-				setEmailError(error);
-			}
-		};
+	const handleLogin = async () => {
+		let currentUserId;
+		let errorMessage;
+		let cookies;
+		await axios
+			.post("http://localhost:8080/auth/login", dataLogin)
+			.then(response => {
+				const data = response.data;
+				currentUserId = data.split(",")[0];
+				errorMessage = data.split(",")[0];
+				cookies = data.split(",")[1];
 
-		const validateEmail = (email) => {
-			const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-			if (!regex.test(email)) {
-				setEmailError("Email không hợp lệ");
-			} else {
-				setEmailError("");
-			}
-		};
-
-		const callApi = async (e) => {
-			e.preventDefault();
-			setErrorMessage('');
-			if (emailError) {
-				setErrorMessage(emailError);
-				return;
-			}
-
-			try {
-				if (login === "lg") {
-					const response = await axios.post('http://localhost:8080/api/users/login', {
-						email: formData.email,
-						password: formData.password,
-					});
-					console.log("Login successful:", response.data);
-				} else {
-					const response = await axios.post(`http://localhost:8080/api/users/register?roleId=${formData.role}`, {
-						name: formData.name,
-						email: formData.email,
-						phone: formData.phone,
-						password: formData.password,
-					});
-					console.log("Registration successful:", response.data);
+				if (cookies == null) {
+					dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });
+					setErr(true);
+					return false;
 				}
-			} catch (error) {
-				console.error("Error:", error);
-				setErrorMessage('Đã xảy ra lỗi. Vui lòng thử lại.');
-			}
-		};
+				cookie.set("auth_token", cookies);
+				return true;
+			})
+			.then(async status => {
+				if (status) {
+					await axios.get(`http://localhost:8080/user/get/${currentUserId}`).then(response => {
+						dispatch({ type: "LOGIN_SUCCESS", payload: response.data });
+						setSignupData(initialValue);
+						setErr(false);
+						console.log(response.data.id);
 
-		return (
-			<div className="login">
-				<div className="login-container">
-					<h3 className="login-label">{login === "lg" ? "Đăng nhập" : "Đăng ký"}</h3>
-					<form onSubmit={callApi}>
-						{login === "sg" && (
-							<div className="login-item">
-								<h5>Tên</h5>
-								<input type="text" name="name" placeholder="Nhập tên của bạn" value={formData.name} onChange={changeForm} required />
-							</div>
-						)}
+						if (response.data.userRole.id == "5") {
+							navigate("/jobrescruiting");
+						} else if (response.data.userRole.id == "4") {
+							navigate("/");
+						} else {
+							navigate("/admin/companies");
+						}
+					});
+				}
+			})
+			.catch(() => {
+				setErr(true);
+			});
+	};
+
+	const handleSignUp = async () => {
+		if (signupData.name == "" || signupData.email == "" || signupData.password == "" || signupData.phone == "" || signupData.userRole.id == "") {
+			alert("Please fill all fields");
+		} else {
+			await axios
+				.post("http://localhost:8080/auth/register", signupData)
+				.then(res => {
+					console.log(res.data);
+
+					return axios.post("http://localhost:8080/employee/add", { userEmployee: { id: res.data } });
+				})
+				.then(() => {
+					setLogin("lg");
+					setErr(false);
+				})
+				.catch(() => {
+					setErr(true);
+				});
+		}
+	};
+	useEffect(() => {
+		setLogin(state);
+	}, [state]);
+	return (
+		<>
+			{" "}
+			{login == "lg" ? (
+				<div className="login">
+					<div className="login-container">
+						<h3 className="login-label">Login</h3>
 						<div className="login-item">
 							<h5>Email</h5>
-							<input type="text" name="email" placeholder="Nhập email của bạn" value={formData.email} onChange={changeForm} required />
-							{emailError && <div className="error-message">{emailError}</div>}
+							<input
+								type="text"
+								name="email"
+								onChange={e => {
+									handleChange(e);
+								}}
+								placeholder="Enter your email"
+							></input>
 						</div>
 						<div className="login-item">
-							<h5>Mật khẩu</h5>
-							<input type="password" name="password" placeholder="Nhập mật khẩu" value={formData.password} onChange={changeForm} required />
+							<h5>Password</h5>
+							<input
+								type="password"
+								name="password"
+								placeholder="Enter your password"
+								onChange={e => {
+									handleChange(e);
+								}}
+							></input>
 						</div>
-						{login === "sg" && (
-							<div className="login-item">
-								<h5>Số điện thoại</h5>
-								<input type="text" name="phone" placeholder="Nhập số điện thoại" value={formData.phone} onChange={changeForm} required />
-							</div>
-						)}
-						{login === "sg" && (
-							<div className="account-role">
-								<h5>Vai trò</h5>
-								<input type="radio" name="role" value="Recruiter" id="Recruiter" onChange={changeForm} />
-								<label htmlFor="Recruiter">Nhà tuyển dụng</label>
-								
-								<input type="radio" name="role" value="Employee" id="Employee" onChange={changeForm} />
-								<label htmlFor="Employee">Nhân viên</label>
-							</div>
-						)}
-						<button className="login-btn" type="submit">{login === "lg" ? "Đăng nhập" : "Đăng ký"}</button>
-						{errorMessage && <div className="error-message">{errorMessage}</div>}
+						{err && <div>Login failed</div>}
+						<button className="login-btn" onClick={handleLogin}>
+							Login
+						</button>
 						<div className="login-more">
-							{login === "lg" ? (
-								<>
-									Bạn chưa có tài khoản?{" "}
-									<span onClick={() => setLogin("sg")}>Đăng ký</span>
-								</>
-							) : (
-								<>
-									Bạn đã có tài khoản?{" "}
-									<span onClick={() => setLogin("lg")}>Đăng nhập</span>
-								</>
-							)}
+							Don't have an account?{" "}
+							<span
+								onClick={() => {
+									setLogin("sg");
+								}}
+							>
+								Sign up
+							</span>{" "}
 						</div>
-					</form>
+					</div>
 				</div>
-			</div>
-		);
+			) : (
+				<div className="login">
+					<div className="login-container">
+						<h3 className="login-label">Sign up</h3>
+						<div className="login-item">
+							<h5>Name</h5>
+							<input
+								onChange={e => {
+									handleChangeSignUp(e);
+								}}
+								name="name"
+								type="text"
+								placeholder="Enter your name"
+							></input>
+						</div>
+						<div className="login-item">
+							<h5>Email</h5>
+							<input
+								onChange={e => {
+									handleChangeSignUp(e);
+								}}
+								name="email"
+								type="text"
+								placeholder="Enter your email"
+							></input>
+						</div>
+						<div className="login-item">
+							<h5>Password</h5>
+							<input
+								onChange={e => {
+									handleChangeSignUp(e);
+								}}
+								name="password"
+								type="password"
+								placeholder="Enter your password"
+							></input>
+						</div>
+						<div className="login-item">
+							<h5>Phone number</h5>
+							<input
+								onChange={e => {
+									handleChangeSignUp(e);
+								}}
+								name="phone"
+								type="text"
+								placeholder="Enter your phone number"
+							></input>
+						</div>
+						<div className="account-role">
+							<input
+								onChange={e => {
+									handleChangeSignUp(e);
+								}}
+								name="userRole"
+								type="radio"
+								value="4"
+								id="Recruiter"
+							></input>
+							<label htmlFor="Recruiter">Recruiter</label>
+							<input
+								onChange={e => {
+									handleChangeSignUp(e);
+								}}
+								name="userRole"
+								type="radio"
+								value="5"
+								id="Employee"
+							></input>
+							<label htmlFor="Employee">Employee</label>
+						</div>
+						{err && <div>Sign up failed</div>}
+						<button className="login-btn" onClick={handleSignUp}>
+							Sign up
+						</button>
+						<div className="login-more">
+							Already have an account?{" "}
+							<span
+								onClick={() => {
+									setLogin("lg");
+								}}
+							>
+								Login
+							</span>{" "}
+						</div>
+					</div>
+				</div>
+			)}
+		</>
+	);
 }
 
 export default Login;

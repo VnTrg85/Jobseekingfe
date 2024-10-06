@@ -8,7 +8,7 @@
 	}
 }
 
-.profile {
+.company-profile {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -26,7 +26,7 @@
 		.edit-profile-catalog {
 			border-radius: 20px;
 			margin-top: 150px;
-			width: 40%;
+			width: 80%;
 			height: 500px;
 			background: white;
 			color: #000000;
@@ -73,7 +73,7 @@
 		}
 	}
 	.user-infor {
-		width: 100%;
+		width: 500px;
 		border: 1px solid #ccc;
 		border-radius: 10px;
 		padding: 40px 30px;

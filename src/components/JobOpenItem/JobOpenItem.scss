@@ -1,0 +1,72 @@
+.jobOpenItem-container {
+	width: 100%;
+	border: 1px solid #ccc;
+	margin-bottom: 10px;
+	border-radius: 10px;
+	padding: 10px 10px;
+	display: flex;
+	align-items: center;
+
+	.jobOpenItem-left {
+		width: 20%;
+		margin-right: 10px;
+		img {
+			width: 80%;
+		}
+	}
+
+	.jobOpenItem-right {
+		width: 80%;
+		text-align: left;
+
+		.jobOpenItem-right-top {
+			display: flex;
+			justify-content: space-between;
+			.learnmore-btn {
+				padding: 10px;
+				background: rgb(140, 48, 48);
+				font-weight: 600;
+				outline: none;
+				cursor: pointer;
+				color: white;
+				border-radius: 10px;
+				border: 1px solid #ccc;
+			}
+		}
+		h3 {
+			font-weight: 900;
+			margin: 10px 0 5px;
+		}
+		h4 {
+			margin: 10px 0 15px;
+		}
+
+		div {
+			.job-salary {
+				color: red;
+				display: inline-block;
+				margin-bottom: 10px;
+			}
+			span {
+				margin-right: 10px;
+				.skill-item {
+					display: inline-block;
+					background: #edfbfe;
+					color: #0f47b2;
+					padding: 5px 10px;
+					border-radius: 5px;
+				}
+			}
+		}
+		.jobOpenItem-bottom {
+			display: flex;
+			justify-content: space-between;
+
+			.job-time {
+				font-size: 15px;
+				font-weight: 400;
+				opacity: 0.6;
+			}
+		}
+	}
+}

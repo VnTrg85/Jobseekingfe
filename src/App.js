@@ -11,6 +11,12 @@ import CompanyManager from "./pages/Admin/CompaniesManager/CompanyManager";
 import UserManager from "./pages/Admin/AccountManager/UserManager";
 import JobTypeManager from "./pages/Admin/JobTypeManager/JobTypeManager";
 import RoleManager from "./pages/Admin/UserRoleManager/RoleManager";
+import CompanyDetail from "./pages/CompanyDetail/CompanyDetail";
+import JobsRecruiting from "./pages/JobsRecruiting/JobsRecruiting";
+import AddJob from "./pages/AddJob/AddJob";
+import JobApplies from "./pages/JobApplies/JobApplies";
+import CompanyProfile from "./pages/CompanyProfile/CompanyProfile";
+import Browse from "./pages/Browse/Browse";
 const Layout = () => {
 	return (
 		<div className="layout">
@@ -20,6 +26,7 @@ const Layout = () => {
 		</div>
 	);
 };
+
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -46,21 +53,43 @@ const router = createBrowserRouter([
 				element: <Profile></Profile>,
 			},
 			{
+				path: "/Browse",
+				element: <Browse></Browse>,
+			},
+			{
+				path: "/company/:id",
+				element: <CompanyDetail></CompanyDetail>,
+			},
+			{
+				path: "/jobrescruiting",
+				element: <JobsRecruiting></JobsRecruiting>,
+			},
+			{ path: "/addJob", element: <AddJob></AddJob> },
+			{
+				path: "/jobapplieds/:id",
+				element: <JobApplies></JobApplies>,
+			},
+			{
+				path: "/companyProfile",
+				element: <CompanyProfile></CompanyProfile>,
+			},
+			,
+			{
 				path: "/Admin/Companies",
-				element: <CompanyManager></CompanyManager>
+				element: <CompanyManager></CompanyManager>,
 			},
 			{
 				path: "/Admin/User",
-				element: <UserManager></UserManager>
+				element: <UserManager></UserManager>,
 			},
 			{
 				path: "/Admin/JobType",
-				element: <JobTypeManager></JobTypeManager>
+				element: <JobTypeManager></JobTypeManager>,
 			},
 			{
 				path: "/Admin/Role",
-				element: <RoleManager></RoleManager>
-			}
+				element: <RoleManager></RoleManager>,
+			},
 		],
 	},
 ]);

@@ -1,0 +1,85 @@
+.company-container {
+	width: 80%;
+	display: flex;
+	text-align: left;
+	.company-left {
+		width: 70%;
+		position: relative;
+
+		img {
+			width: 100%;
+		}
+
+		.job-banner {
+			width: 80%;
+			position: absolute;
+			top: 100px;
+			left: 80px;
+			background: rgb(211, 226, 239);
+			box-shadow: 5px 5px 10px 5px #ccc;
+			display: flex;
+			padding: 20px 10px;
+			border-radius: 10px;
+			.job-banner-img {
+				width: 30%;
+				border-radius: 10px;
+				overflow: hidden;
+				img {
+					width: 50%;
+					border-radius: 0;
+					margin-right: 10px;
+				}
+			}
+
+			div {
+				h3 {
+					margin: 0 0 10px;
+				}
+				width: 60%;
+				div {
+					.job-numbers {
+						text-decoration: underline;
+						font-weight: 600;
+						opacity: 0.6;
+						margin-left: 10px;
+					}
+				}
+				.banner-bottom {
+					margin-top: 10px;
+					width: 100%;
+					display: flex;
+					justify-content: space-between;
+					.follow-btn {
+						color: white;
+						font-weight: 600;
+						border-radius: 10px;
+						width: 80%;
+						padding: 10px;
+						font-size: 15px;
+						background: rgb(65, 31, 31);
+						border: 1px solid #ccc;
+					}
+					div {
+						border: 1px solid #ccc;
+						text-align: center;
+						align-content: center;
+						width: 20%;
+						padding: 2px;
+						border-radius: 10px;
+					}
+				}
+			}
+		}
+	}
+	.company-right {
+		width: 30%;
+		padding: 0 20px;
+		border: 1px solid #ccc;
+		div {
+			h3 {
+				border-bottom: 1px solid #ccc;
+				padding: 10px 0;
+			}
+		}
+	}
+}

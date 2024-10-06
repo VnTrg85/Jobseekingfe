@@ -1,0 +1,20 @@
+.employee-container {
+	width: 500px;
+	display: flex;
+	flex-direction: column;
+	.employee-header {
+		h2 {
+			color: red;
+			font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+			margin: 0 0 10px;
+		}
+	}
+	div {
+		display: flex;
+		align-items: center;
+		gap: 50px;
+		h4 {
+			text-decoration: underline;
+		}
+	}
+}

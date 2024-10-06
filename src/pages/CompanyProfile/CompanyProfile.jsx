@@ -1,22 +1,24 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { faPhone, faUserPen, faEnvelope, faXmark } from "@fortawesome/free-solid-svg-icons";
-import "./Profile.scss";
-import AppliedTable from "../../components/AppliedTable/AppliedTable";
+import "./CompanyProfile.scss";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import SaveForLaterTable from "../../components/SaveForLaterTable/SaveForLaterTable";
+
 import { useNavigate } from "react-router-dom";
 import cookie from "js-cookie";
+function CompanyProfile() {
+	const [desc, setDesc] = useState("");
 
-function Profile() {
 	const [update, setUpdate] = useState(false);
 	const { user, dispatch } = useContext(AuthContext);
-	const [employee, setEmployee] = useState(null);
-	const [listJobApplieds, setListJobApplieds] = useState([]);
-	const [listJobSave, setListJobSave] = useState([]);
+	const [company, setCompany] = useState(null);
+
 	const [file, setFile] = useState({
 		image: "",
 		resume: "",
@@ -31,37 +33,23 @@ function Profile() {
 		email: user?.email,
 		password: user?.password,
 	});
-
 	const navigate = useNavigate();
 	const url = "https://api.cloudinary.com/v1_1/vantruong/image/upload";
 	useEffect(() => {
 		const getData = async () => {
-			await axios.get(`http://localhost:8080/employee/getByUserId/${user?.id}`).then(res => {
-				setEmployee(res.data);
-				setUpdateEmployeeData(res.data);
-			});
-			await axios.get(`http://localhost:8080/userJobApplied/getListByUserId/${user?.id}`).then(res => {
-				setListJobApplieds(res.data.filter(job => job.jobStatus.id == 1));
-				setListJobSave(res.data.filter(job => job.jobStatus.id == 2));
-			});
+			await axios
+				.get(`http://localhost:8080/company/getByUserID/${user?.id}`)
+				.then(res => {
+					setCompany(res.data);
+					setUpdateEmployeeData(res.data);
+				})
+				.catch(() => {});
 		};
 		getData();
 	}, [user]);
-
 	const handleUpdateClick = async () => {
-		//resume
-		toast.loading("Updating...", { containerId: "A" });
-		var urlRes = employee?.resume;
-		if (file.resume != "") {
-			const formData = new FormData();
-			formData.append("file", file.resume);
-			formData.append("upload_preset", "jobseeking");
-			const res = await axios.post(url, formData);
-			urlRes = res.data.url;
-		}
-
 		//image
-		var urlResImg = employee?.image;
+		var urlResImg = company?.logo;
 		if (file.image != "") {
 			const formDataImg = new FormData();
 			formDataImg.append("file", file.image);
@@ -73,11 +61,11 @@ function Profile() {
 		await axios
 			.put("http://localhost:8080/user/update", updateUserData)
 			.then(async () => {
-				return await axios.post("http://localhost:8080/employee/add", { ...updateEmployeeData, resume: urlRes, image: urlResImg });
+				return await axios.post("http://localhost:8080/company/add", { ...updateEmployeeData, logo: urlResImg });
 			})
 			.then(() => {
 				dispatch({ type: "LOGIN_SUCCESS", payload: updateUserData });
-				setEmployee(updateEmployeeData);
+				setCompany(updateEmployeeData);
 				setUpdate(false);
 				toast.dismiss({ containerId: "A" });
 				toast.success("Updated successfully", { containerId: "B" });
@@ -90,12 +78,12 @@ function Profile() {
 		setUpdateUserData(prev => ({ ...prev, [e.target.id]: e.target.value }));
 	};
 	const handleInputEmployeeChange = e => {
-		if (e.target.id == "skills") {
+		if (e.target.id == "industry") {
 			setUpdateEmployeeData(prev => ({ ...prev, [e.target.id]: e.target.value.split(",") }));
 		} else setUpdateEmployeeData(prev => ({ ...prev, [e.target.id]: e.target.value }));
 	};
 	return (
-		<div className="profile">
+		<div className="company-profile">
 			{update && (
 				<div className="update-profile-container">
 					<div className="edit-profile-catalog">
@@ -110,7 +98,7 @@ function Profile() {
 							</div>
 						</div>
 						<div>
-							<h4>Image</h4>
+							<h4>Logo</h4>
 							<input
 								id="image"
 								type="file"
@@ -128,21 +116,25 @@ function Profile() {
 							<input id="phone" type="text" value={updateUserData.phone} onChange={e => handleInputUserChange(e)}></input>
 						</div>
 						<div>
-							<h4>Bio</h4>
-							<input id="bio" type="text" value={updateEmployeeData.bio} onChange={e => handleInputEmployeeChange(e)}></input>
-						</div>
-						<div>
-							<h4>Skills</h4>
-							<input id="skills" type="text" value={updateEmployeeData.skills} onChange={e => handleInputEmployeeChange(e)}></input>
-						</div>
-						<div>
-							<h4>Resume</h4>
+							<h4>Description</h4>
 							<input
-								id="resume"
-								type="file"
-								onChange={e => {
-									setFile(prev => ({ ...prev, [e.target.id]: e.target.files[0] }));
-								}}
+								id="description"
+								type="text"
+								value={updateEmployeeData.description}
+								onChange={e => handleInputEmployeeChange(e)}
+							></input>
+						</div>
+						<div>
+							<h4>Industry</h4>
+							<input id="industry" type="text" value={updateEmployeeData.industry} onChange={e => handleInputEmployeeChange(e)}></input>
+						</div>
+						<div>
+							<h4>Company Size</h4>
+							<input
+								id="companySize"
+								type="text"
+								value={updateEmployeeData.companySize}
+								onChange={e => handleInputEmployeeChange(e)}
 							></input>
 						</div>
 						<button onClick={handleUpdateClick}>Update</button>
@@ -151,14 +143,12 @@ function Profile() {
 			)}
 			<ToastContainer closeOnClick autoClose={1000} position="bottom-center" containerId="A"></ToastContainer>
 			<ToastContainer closeOnClick autoClose={1000} position="bottom-center" containerId="B"></ToastContainer>
-
 			<div className="user-infor">
 				<div className="user-infor-header">
 					<div className="user-name-des-img">
-						<img src={employee?.image || "https://img.icons8.com/nolan/600w/000000/user-default.png"}></img>
+						<img src={company?.logo || "https://img.icons8.com/nolan/600w/000000/user-default.png"}></img>
 						<div className="user-name-des">
 							<h3>{user?.name}</h3>
-							<p>{employee?.bio}</p>
 						</div>
 					</div>
 					<div
@@ -178,19 +168,27 @@ function Profile() {
 					<FontAwesomeIcon icon={faPhone} />
 					<span>{user?.phone}</span>
 				</div>
+				<div className="company-desc">
+					<h4>Company Description</h4>
+					<p>{company?.description}</p>
+				</div>
 				<div className="user-skills">
-					<h4>Skills</h4>
+					<h4>Industry</h4>
 
-					{employee?.skills?.map((skill, index) => (
+					{company?.industry?.map((item, index) => (
 						<span key={index} className="skill-item">
-							{skill}
+							{item}
 						</span>
 					))}
 				</div>
-				<div className="user-resume">
-					<h4>Resume</h4>
-					<a target="_blank" href={employee?.resume}>
-						my-cv
+				<div className="user-skills">
+					<h4>Company size</h4>
+					<p>{company?.companySize}</p>
+				</div>
+				<div className="user-skills">
+					<h4>Website</h4>
+					<a target="_blank" href={company?.website}>
+						We
 					</a>
 				</div>
 				<button
@@ -215,16 +213,8 @@ function Profile() {
 					Log out
 				</button>
 			</div>
-			<div className="applied-jobs-container">
-				<h3>Applied jobs</h3>
-				<AppliedTable data={listJobApplieds}></AppliedTable>
-			</div>
-			<div className="applied-jobs-container">
-				<h3>Save jobs</h3>
-				<SaveForLaterTable data={listJobSave}></SaveForLaterTable>
-			</div>
 		</div>
 	);
 }
 
-export default Profile;
+export default CompanyProfile;

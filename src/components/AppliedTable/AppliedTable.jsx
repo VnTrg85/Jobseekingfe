@@ -1,26 +1,25 @@
 import * as React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import Paper from "@mui/material/Paper";
-function AppliedTable() {
+import Box from "@mui/material/Box";
+import "./AppliedTable.scss";
+function AppliedTable({ data }) {
 	const columns = [
-		{ field: "Date", headerName: "Date", width: 120 },
-		{ field: "JobRole", headerName: "Job Role", width: 300 },
+		{ field: "Date", headerClassName: "css-header", headerName: "Date", width: 120 },
+		{ field: "JobName", headerName: "Job name", width: 300 },
 		{ field: "Company", headerName: "Company", width: 200 },
 		{ field: "Status", headerName: "Status", width: 100 },
 	];
-	const rows = [
-		{ id: 1, Date: "12-02-2024", JobRole: "Software engineering", Company: "Google", Status: "selected" },
-		{ id: 1, Date: "12-02-2024", JobRole: "Software engineering", Company: "Google", Status: "selected" },
-		{ id: 1, Date: "12-02-2024", JobRole: "Software engineering", Company: "Google", Status: "selected" },
-		{ id: 1, Date: "12-02-2024", JobRole: "Software engineering", Company: "Google", Status: "selected" },
-		{ id: 1, Date: "12-02-2024", JobRole: "Software engineering", Company: "Google", Status: "selected" },
-		{ id: 1, Date: "12-02-2024", JobRole: "Software engineering", Company: "Google", Status: "selected" },
-		{ id: 1, Date: "12-02-2024", JobRole: "Software engineering", Company: "Google", Status: "selected" },
-	];
+	const rows = data.map((item, index) => ({
+		id: index,
+		Date: item?.time,
+		JobName: item?.job?.title,
+		Company: item?.job?.company?.userCompany?.name,
+		Status: item?.jobStatus?.name,
+	}));
 	const paginationModel = { page: 0, pageSize: 5 };
 	return (
 		<div className="applied-table">
-			<Paper sx={{ height: 400, width: "100%" }}>
+			<Box sx={{ height: 400, width: "100%" }}>
 				<DataGrid
 					rows={rows}
 					columns={columns}
@@ -28,7 +27,7 @@ function AppliedTable() {
 					pageSizeOptions={[5, 10]}
 					sx={{ border: 1 }}
 				/>
-			</Paper>
+			</Box>
 		</div>
 	);
 }

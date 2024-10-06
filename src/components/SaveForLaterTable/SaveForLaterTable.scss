@@ -1,0 +1,39 @@
+.saveforlater-container {
+	width: 100%;
+	border: 1px solid #ccc;
+	.saveforlater-table {
+		padding: 0 10px;
+		display: flex;
+		align-items: center;
+		gap: 50px;
+		border-bottom: 1px solid #ccc;
+		.saveforlater-date {
+			flex: 2;
+		}
+		.saveforlater-name {
+			flex: 3;
+		}
+		.saveforlater-company {
+			flex: 1;
+		}
+		.saveforlater-action {
+			flex: 1;
+		}
+		.saveforlater-item {
+			font-size: 15px;
+			font-weight: 500;
+		}
+		.btn-unsave {
+			padding: 5px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+			outline: none;
+			text-align: center;
+			background-color: black;
+			color: white;
+			font-size: 14px;
+			font-weight: 600;
+			cursor: pointer;
+		}
+	}
+}

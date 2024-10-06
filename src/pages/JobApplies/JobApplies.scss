@@ -1,0 +1,72 @@
+.job-applied-container {
+	width: 100vw;
+	height: 100vh;
+	background: rgb(0, 0, 0, 0.6);
+	display: flex;
+	justify-content: center;
+	.job-applied-dialog {
+		width: 40%;
+		background: white;
+		border-radius: 10px;
+		margin: 20px 0;
+		.job-applied-header,
+		.job-container {
+			padding: 0 10px;
+			display: flex;
+			gap: 10px;
+			justify-content: space-between;
+			align-items: center;
+			.head {
+				color: blue;
+				font-weight: 900;
+				border: 1px solid #ccc;
+				padding: 10px;
+				border-radius: 10px;
+				text-decoration: none !important;
+			}
+			.job-time {
+				flex: 1;
+			}
+			.job-user-name {
+				flex: 1;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+		}
+		.x-btn {
+			margin: 10px 10px;
+			background: black;
+			color: white;
+			display: block;
+			font-size: 12px;
+			padding: 10px;
+			cursor: pointer;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			font-weight: 800;
+		}
+		.x-btn:hover {
+			background: #7c3535;
+		}
+	}
+	.employee-dialog {
+		background: white;
+		display: flex;
+		flex-direction: column;
+		align-items: end;
+		margin-top: 20px;
+		border-radius: 10px;
+		padding: 20px;
+		height: 400px;
+		.x-btn {
+			font-size: 12px;
+			padding: 10px;
+			cursor: pointer;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+		}
+		.x-btn:hover {
+			background: #ccc;
+		}
+	}
+}

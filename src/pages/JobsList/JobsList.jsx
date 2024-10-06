@@ -1,6 +1,17 @@
 import "./JobsList.scss";
 import JobItem from "../../components/JobItem/JobItem.jsx";
+import { useEffect, useState } from "react";
+import axios from "axios";
 function JobsList() {
+	const [jobs, setJobs] = useState(null);
+	useEffect(() => {
+		const getData = async () => {
+			await axios.get("http://localhost:8080/job/getAll").then(res => {
+				setJobs(res.data);
+			});
+		};
+		getData();
+	}, [jobs]);
 	return (
 		<div className="job-list">
 			<div className="job-list-left">
@@ -43,17 +54,7 @@ function JobsList() {
 					</div>
 				</div>
 			</div>
-			<div className="job-list-right">
-				<JobItem></JobItem>
-				<JobItem></JobItem>
-				<JobItem></JobItem>
-				<JobItem></JobItem>
-				<JobItem></JobItem>
-				<JobItem></JobItem>
-				<JobItem></JobItem>
-				<JobItem></JobItem>
-				<JobItem></JobItem>
-			</div>
+			<div className="job-list-right">{jobs && jobs.map((job, index) => <JobItem key={index} info={job}></JobItem>)}</div>
 		</div>
 	);
 }
