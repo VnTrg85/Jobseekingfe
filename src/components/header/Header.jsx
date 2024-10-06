@@ -17,23 +17,16 @@ function Header() {
 			</div>
 			<div className="header-right">
 				<div className="header-items">
-					<div
-						className="header-item"
-						onClick={() => {
-							navigate("/");
-						}}
-					>
-						Home
-					</div>
-					<div
-						className="header-item"
-						onClick={() => {
-							navigate("/jobslist");
-						}}
-					>
-						Jobs
-					</div>
-					<div className="header-item ">Browse</div>
+					{
+							<div className="header-items">
+							<div className="header-item" onClick={() => {navigate("/admin/companies");}}>Companies</div>
+							<div className="header-item" onClick={() => {navigate("/admin/jobtype");}}>Jobtype</div>
+							<div className="header-item" onClick={() => {navigate("/admin/role");}}>Roles</div>
+							<div className="header-item" onClick={() => {navigate("/admin/user");}}>User</div>
+
+							</div>
+						
+					}
 				</div>
 				{user != null ? (
 					<div className="header-user">

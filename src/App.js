@@ -7,6 +7,10 @@ import Login from "./pages/Login/Login";
 import JobDetail from "./pages/JobDetail/JobDetail";
 import JobsList from "./pages/JobsList/JobsList";
 import Profile from "./pages/Profile/Profile";
+import CompanyManager from "./pages/Admin/CompaniesManager/CompanyManager";
+import UserManager from "./pages/Admin/AccountManager/UserManager";
+import JobTypeManager from "./pages/Admin/JobTypeManager/JobTypeManager";
+import RoleManager from "./pages/Admin/UserRoleManager/RoleManager";
 const Layout = () => {
 	return (
 		<div className="layout">
@@ -41,6 +45,22 @@ const router = createBrowserRouter([
 				path: "/Profile",
 				element: <Profile></Profile>,
 			},
+			{
+				path: "/Admin/Companies",
+				element: <CompanyManager></CompanyManager>
+			},
+			{
+				path: "/Admin/User",
+				element: <UserManager></UserManager>
+			},
+			{
+				path: "/Admin/JobType",
+				element: <JobTypeManager></JobTypeManager>
+			},
+			{
+				path: "/Admin/Role",
+				element: <RoleManager></RoleManager>
+			}
 		],
 	},
 ]);
